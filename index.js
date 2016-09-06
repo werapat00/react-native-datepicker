@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {
   View,
   Text,
+    TextInput,
   Image,
   Modal,
   TouchableHighlight,
@@ -112,9 +113,9 @@ class DatePicker extends Component {
 
   getDateStr(date = this.props.date) {
     if (date instanceof Date) {
-      return Moment(date).format(this.format);
+      return Moment(date).format(this.format).trim();
     } else {
-      return Moment(this.getDate(date)).format(this.format);
+      return Moment(this.getDate(date)).format(this.format).trim();
     }
   }
 
@@ -127,9 +128,11 @@ class DatePicker extends Component {
   getTitleElement() {
     const {date, placeholder} = this.props;
     if (!date && placeholder) {
-      return (<Text style={[Style.placeholderText, this.props.customStyles.placeholderText]}>{placeholder}</Text>);
+      return (<Text style={[Style.dateText, this.props.customStyles.placeholderText]}>{placeholder}</Text>);
+      //return (<Text style={[Style.placeholderText, this.props.customStyles.placeholderText]}>{placeholder}</Text>);
     }
-    return (<Text style={[Style.dateText, this.props.customStyles.dateText]}>{this.getDateStr()}</Text>);
+    return (<Text style={[Style.dateText, this.props.customStyles.dateText]} >{this.getDateStr()}</Text>);
+    //return (<Text style={[Style.dateText, this.props.customStyles.dateText]}>{this.getDateStr()}</Text>);
   }
 
   onDatePicked({action, year, month, day}) {
@@ -232,9 +235,7 @@ class DatePicker extends Component {
         onPress={this.onPressDate}
       >
         <View style={[Style.dateTouchBody, customStyles.dateTouchBody]}>
-          <View style={dateInputStyle}>
             {this.getTitleElement()}
-          </View>
           {this.props.showIcon && <Image
             style={[Style.dateIcon, customStyles.dateIcon]}
             source={this.props.iconSource}
